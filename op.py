@@ -3,22 +3,26 @@
 import math
 import random
 
+# Constants for the known types of data used by the operators
 FLOAT = 'float'
 POINT = 'point'
 COLOR = 'color'
 
 def distance(p1,p2):
+    """The distance between points p1 and p2 in the plane."""
     (x1,y1) = p1
     (x2,y2) = p2
     return math.sqrt(2 * ((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1))) * 0.5 - 1.0
 
 def rgb_average(c1, c2, w):
+    """Weighted average of two colors."""
     (r1,g1,b1) = c1
     (r2,g2,b2) = c2
     v = 1.0 - w
     return (w*r1 + v*r2, w*g1 + v*g2, w*b1 + v*b2)
 
 def average(x,y,w):
+    """Weighted average of two numbers."""
     return w*x + (1-w)*y
 
 def scale(x, a, b):
@@ -27,6 +31,10 @@ def scale(x, a, b):
 ### Operators
 
 class Operator():
+    """Each operator has the attributes name, args and ret:
+       * name is the name to be displayed by __repr__
+       * args is a list of types of the operator arguments
+       * ret is the return type."""
     def __repr__(self):
         return self.name
 
@@ -165,6 +173,8 @@ class Y(Operator):
     def func(self):
         return self.y
 
+## The list of all operators used by the generation procedure.
+## If you add a new operator, don't forget to include it here.
 OPERATORS = (
     RGB, Gray, Point, ColorRing, Gray, Distance,
     Faverage, Paverage, Caverage,
@@ -197,6 +207,13 @@ class Instruction():
         return '%d: %s %s' % (self.addr, self.op.name, self.args)
 
 class Program():
+    """The main generation procedure. The constructor takes
+       a parameter which determines the size of the generated
+       program, and optionally a list of operators.
+
+       A program for drawing an image is represented by a
+       list of instructions.
+    """
     def __init__(self, n, operators=OPERATORS):
         (scalars, foci, palette) = make_environment()
         self.xop = X(scalars, foci, palette)
