@@ -1,3 +1,5 @@
+# The operators used by the random art generator
+
 import math
 import random
 
