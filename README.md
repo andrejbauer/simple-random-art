@@ -33,6 +33,4 @@ experiments are possible:
 * The program uses cartesian coordinates. You could experiment with polar
   coordinates.
 
-For more information and further discussion, see http://math.andrej.com/category/random-art/
-
 You need Python 2.7 or later to run the program. To start the program, run `randomart.py` from command-line or from the Python IDE *IDLE*.
